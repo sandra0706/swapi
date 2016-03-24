@@ -32,4 +32,43 @@
         }
       }
       swapiurl = '/proxy';
+	  
+	  this.infiniteScroll = function(options) {
+			var defaults = {
+			  callback: function() {},
+			  distance: 50
+    }
+	
+	for (var key in defaults) {
+			  if(typeof options[key] == 'undefined') options[key] = defaults[key];
+			}  
+			
+			var scroller = {
+			  options: options,
+			  updateInitiated: false
+			}
+			
+			window.onscroll = function(event) {
+			  handleScroll(scroller, event);
+			}
+	  }
+	  
+	  function getScrollPos() {
+			if (isIE) {
+			  return document.documentElement.scrollTop;
+			} else {
+			  return window.pageYOffset;
+			}
+  }
+  
+  var prevScrollPos = getScrollPos();
+  
+  function handleScroll(scroller, event) {
+			if (scroller.updateInitiated) {
+			  return;
+			}   
+			var scrollPos = getScrollPos();
+			if (scrollPos == prevScrollPos) {
+			  return;
+    }
 })();
